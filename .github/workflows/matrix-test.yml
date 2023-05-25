@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   matrix-job:
+    if: ${{ matrix.value == 'matrix-test-1' }}
     name: "Run a matrix job"
     runs-on: ubuntu-latest
     strategy:
@@ -11,7 +12,6 @@ jobs:
       max-parallel: 2
       matrix:
         value: [matrix-test-1, matrix-test-2]
-    if: ${{ matrix.value != 'matrix-test-1' }}
     steps:
       - name: "Output something"
         run: |
