@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   matrix-job:
+    if: ${{ !contains(github.event.commits[0].message, 'skip') }}
     name: "Run a matrix job"
     runs-on: ubuntu-latest
 
@@ -14,7 +15,6 @@ jobs:
         value: [matrix-test-1, matrix-test-2]
     steps:
       - name: "Output something"
-        if: ${{ matrix.value != 'matrix-test-1' }}
         run: |
           echo ${{ matrix.value }}
   post-matrix-job:
