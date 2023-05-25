@@ -12,7 +12,21 @@ jobs:
       max-parallel: 2
       matrix:
         value: [matrix-test-1, matrix-test-2]
-
     steps:
       - name: "Output something"
-        run: echo ${{ matrix.value }}
+#        if: ${{ !github.event.act }}
+        run: |
+          [ ${{ matrix.value }} == "matrix-test-2" ] && exit 1 || echo ${{ matrix.value }}
+#          echo ${{ matrix.value }}
+  post-matrix-job:
+    name: "Post matrix job"
+    runs-on: ubuntu-latest
+    needs: matrix-job
+    steps:
+#      - name: "Verify matrix jobs succeeded"
+#        if: ${{ needs.matrix-job.result != 'success' }}
+#        run: |
+#          echo "A matrix job failed/was skipped."
+#          exit 1
+      - name: "Output something if matrix succeeds"
+        run: echo "Woohoo"
