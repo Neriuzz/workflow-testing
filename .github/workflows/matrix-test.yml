@@ -14,10 +14,9 @@ jobs:
         value: [matrix-test-1, matrix-test-2]
     steps:
       - name: "Output something"
-#        if: ${{ !github.event.act }}
+        if: ${{ matrix.value != 'matrix-test-1' }}
         run: |
-          [ ${{ matrix.value }} == "matrix-test-2" ] && exit 1 || echo ${{ matrix.value }}
-#          echo ${{ matrix.value }}
+          echo ${{ matrix.value }}
   post-matrix-job:
     name: "Post matrix job"
     runs-on: ubuntu-latest
