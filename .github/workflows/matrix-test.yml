@@ -4,15 +4,14 @@ on: [push]
 
 jobs:
   matrix-job:
-    if: ${{ !contains(github.event.commits[0].message, 'skip') }}
     name: "Run a matrix job"
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       max-parallel: 2
       matrix:
         value: [matrix-test-1, matrix-test-2]
+    if: ${{ matrix.value != 'matrix-test-1' }}
     steps:
       - name: "Output something"
         run: |
